@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System;
 
 namespace Capstone_Wishlist_app.Models
 {
@@ -54,9 +53,6 @@ namespace Capstone_Wishlist_app.Models
 
     public class RegisterViewModel
     {
-        [Display(Name = "Donor's Name")]
-        public string Name { get; set; }
-
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]

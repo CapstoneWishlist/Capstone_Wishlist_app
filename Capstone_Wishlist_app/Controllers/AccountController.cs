@@ -60,15 +60,6 @@ namespace Capstone_Wishlist_app.Controllers
                 var user = await UserManager.FindAsync(model.Email, model.Password);
                 if (user != null)
                 {
-                    
-                    if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-                    {
-                        string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account-Resend");
-                        ViewBag.errorMessage = "You must have a confirmed email to log on. "
-                             + "The confirmation token has been resent to your email account."; 
-                        return View("Error");
-                    }
-                    //var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe);
                     await SignInAsync(user, model.RememberMe);
                     return RedirectToLocal(returnUrl);
                 }
@@ -80,14 +71,6 @@ namespace Capstone_Wishlist_app.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
-        }
-
-        //
-        // GET: /Account/Register
-        [AllowAnonymous]
-        public ActionResult RegisterStaff()
-        {
-            return View();
         }
 
         //
@@ -107,27 +90,19 @@ namespace Capstone_Wishlist_app.Controllers
         {
             if (ModelState.IsValid)
             {
-               
-                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email, Name = model.Name };
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    //await SignInAsync(user, isPersistent: false);
+                    await SignInAsync(user, isPersistent: false);
 
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    string callbackUrl = await SendEmailConfirmationTokenAsync(user.Id, "Confirm your account");
-                    // Uncomment to debug locally 
-                    // TempData["ViewBagLink"] = callbackUrl;
+                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    ViewBag.Message = "Check your email and confirm your account, you must be confirmed "
-                                    + "before you can log in.";
-
-                    return View("Info");
-                    //return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
                 }
                 else
                 {
@@ -187,10 +162,10 @@ namespace Capstone_Wishlist_app.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form
@@ -791,17 +766,6 @@ namespace Capstone_Wishlist_app.Controllers
             ViewBag.Roles = new SelectList(roles);
             ViewBag.Users = new SelectList(users);
             return View("RoleAddToUser");
-        }
-
-        private async Task<string> SendEmailConfirmationTokenAsync(string userID, string subject)
-        {
-            string code = await UserManager.GenerateEmailConfirmationTokenAsync(userID);
-            var callbackUrl = Url.Action("ConfirmEmail", "Account",
-               new { userId = userID, code = code }, protocol: Request.Url.Scheme);
-            await UserManager.SendEmailAsync(userID, subject,
-               "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
-            return callbackUrl;
         }
 
     }

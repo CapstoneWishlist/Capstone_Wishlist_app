@@ -9,54 +9,54 @@
 
 <div>
     <h4>Family</h4>
-    <hr />
+	<hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.ParentFirstName)
+            @Html.DisplayNameFor(model => model.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ParentFirstName)
+            @Html.DisplayFor(model => model.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ParentLastName)
+            @Html.DisplayNameFor(model => model.Address1)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ParentLastName)
+            @Html.DisplayFor(model => model.Address1)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Shipping_address)
+            @Html.DisplayNameFor(model => model.Address2)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Shipping_address)
+            @Html.DisplayFor(model => model.Address2)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Shipping_city)
+            @Html.DisplayNameFor(model => model.City)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Shipping_city)
+            @Html.DisplayFor(model => model.City)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Shipping_state)
+            @Html.DisplayNameFor(model => model.Country)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Shipping_state)
+            @Html.DisplayFor(model => model.Country)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Shipping_zipCode)
+            @Html.DisplayNameFor(model => model.Zipcode)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Shipping_zipCode)
+            @Html.DisplayFor(model => model.Zipcode)
         </dd>
 
         <dt>
@@ -78,6 +78,6 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Family_ID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

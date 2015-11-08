@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Capstone_Wishlist_app.Models;
 
 namespace Capstone_Wishlist_app
 {
@@ -13,11 +14,12 @@ namespace Capstone_Wishlist_app
     {
         protected void Application_Start()
         {
+           // Database.SetInitializer<Entities>(new DropCreateDatabaseIfModelChanges<Entities>());
+            Database.SetInitializer<Entities>(null);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            Database.SetInitializer<Models.ApplicationDbContext>(null);
         }
     }
 }

@@ -1,0 +1,56 @@
+﻿@using System.Web.Mvc;
+@model IEnumerable<Capstone_Wishlist_app.Models.Child>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Child List</h2>
+
+<p>
+    @{
+        string id = HttpContext.Current.Request.RequestContext.RouteData.Values["id"].ToString();
+        int fid = Convert.ToInt32(id, 16);
+    }
+    @Html.ActionLink("Register a New Child", "ChildSignup", new { controller = "Profile", id = fid })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Age)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Gender)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var cd in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => cd.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => cd.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => cd.Age)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => cd.Gender)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { id = cd.Id, fid = fid })|
+            @Html.ActionLink("Edit WishList", "Index", new { controller = "WishList", id = cd.Id })
+        </td>
+    </tr>
+}
+
+</table>
